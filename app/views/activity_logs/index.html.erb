@@ -1,2 +1,61 @@
-<h1>ActivityLogs#index</h1>
-<p>Find me in app/views/activity_logs/index.html.erb</p>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+
+<div class="main" style="width: 100%;">
+	<div id="spinner" class=""></div>
+	<table id="table" class="table" style="width: 70%; margin-left: 15%;">
+	  	<thead class="thead-dark">
+	    	<tr>
+		      <th scope="col">Bebé</th>
+		      <th scope="col">Asistente</th>
+		      <th scope="col">Actividad</th>
+		      <th scope="col">Inicio</th>
+		      <th scope="col">Estatus</th>
+		      <th scope="col">Duración</th>
+		    </tr>
+		</thead>
+	  	<tbody>
+	  	</tbody>
+	</table>
+</div>
+
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		consultarInformacion(null, null, null, null);
+	});
+
+
+	function consultarInformacion(baby_id, assistant_id, page_id, status){
+		$('#spinner').addClass('hm-spinner');
+		$.ajax({
+			type:"POST", 
+			url:"<%= consultar_info_url %>",
+			data: {baby_id: baby_id, assistant_id: assistant_id, page_id: page_id, status: status},
+			dataType: 'json',
+			success:function(result){
+				if(result[0] == 400){
+					console.log("success")
+					console.log(result[1])
+					// $.each(result[0]["ruta_final"], function(index, direcciones){
+					// 	$('#elementos').append("<tr><th>"+ index + "</th><td><input style='width: 100%' id='input_"+index+"' type='text' value='" + direcciones["direccion"] + "'></td><td><button class='normal' id='"+index+"' onclick='verificarAdress(this.id)'>Verificar Direccion</button><td><button  class='normal' id='updt_"+index+"' value='"+la_order_id+"' onclick='actualizarAdress(this.id, this.value)'>Actualizar Direccion</button></td><td><button class='danger' id='"+la_order_id+"' onclick=eliminar(this.id) >Eliminar</td></tr>");
+					// });
+					$('#spinner').removeClass('hm-spinner');
+				}else{
+					console.log("Error")
+					console.log(result[1])
+				}
+			}, 
+			error:function(err){
+				$('#spinner').removeClass('hm-spinner');
+				console.log("Error no se recibieron los datos")
+				console.log(err)	
+			}
+	  	});
+	}
+</script>
