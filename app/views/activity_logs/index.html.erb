@@ -64,6 +64,8 @@
 	  	<tbody id="elementos">
 	  	</tbody>
 	</table>
+
+
 </div>
 
 
@@ -80,9 +82,9 @@
 	});
 
 
-
 	function consultarInformacion(baby_id, assistant_id, status, page_id){
 		$("#elementos").empty();
+		pagina = 0
 		console.log("vamos con ajax")
 		$.ajax({
 			type:"POST", 
@@ -121,7 +123,7 @@
 		console.log(status)
 		consultarInformacion(baby_id, assistant_id, status, pagina);
 	}
-	
+
 </script>
 
 
