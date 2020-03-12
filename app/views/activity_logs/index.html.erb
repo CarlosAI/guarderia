@@ -33,13 +33,14 @@
 
 	function consultarInformacion(baby_id, assistant_id, page_id, status){
 		$('#spinner').addClass('hm-spinner');
+		console.log("vamos con ajax")
 		$.ajax({
 			type:"POST", 
-			url:"<%= consultar_info_url %>",
+			url:"<%= consultar_info_path %>",
 			data: {baby_id: baby_id, assistant_id: assistant_id, page_id: page_id, status: status},
 			dataType: 'json',
 			success:function(result){
-				if(result[0] == 400){
+				if(result[0] == 200){
 					console.log("success")
 					console.log(result[1])
 					// $.each(result[0]["ruta_final"], function(index, direcciones){
