@@ -36,7 +36,7 @@ class ActivityLogsController < ApplicationController
 			logs = []
 			Time.zone = "Monterrey"
 			res.each do |x|
-				x["start_time"] = x["start_time"].in_time_zone.strftime("%d-%B-%Y %I:%M %p ")
+				x["start_time"] = x["start_time"].in_time_zone.strftime("%Y-%m-%d %I:%M %p ")
 			end
 			salida = [200, res]
 		else

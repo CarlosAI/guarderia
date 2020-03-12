@@ -6,15 +6,51 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
 
-<select>
-	<% @bebes.each do |bebe| %>
-	<option value="<%= bebe['id'] %>"><%= bebe['name'] %></option>
-	<% end %>
-</select>
 
 <div class="main" style="width: 100%;">
 	<div id="spinner" class=""></div>
-	<table id="table" class="table" style="width: 70%; margin-left: 15%;">
+
+	<div class="row" style="width: 50%; margin-left: 15%; margin-top: 30px;">
+		<h1>Log de Actividades</h1>
+	</div>
+
+	<div class="row" style="width: 60%; margin-left: 14.2%; margin-top: 15px;">
+		<div style="width: 15; float: left;%" class="col">
+			<label for="inputState">Bebé</label>
+			<select id="input_1" class="form-control">
+				<option selected value="">Ninguno</option>
+				<% @bebes.each do |bebe| %>
+					<option value="<%= bebe['id'] %>"><%= bebe['name'] %></option>
+				<% end %>
+			</select>
+		</div>
+
+		<div style="width: 15%; float: left;" class="col">
+			<label for="inputState">Asistentes</label>
+			<select id="input_2" class="form-control">
+				<option selected value="">Ninguno</option>
+				<% @asistentes.each do |assistant| %>
+					<option value="<%= assistant['id'] %>"><%= assistant['name'] %></option>
+				<% end %>
+			</select>
+		</div>
+
+		<div style="width: 15%; float: left;" class="col">
+			<label for="inputState">Status</label>
+			<select id="input_3" class="form-control">
+				<option selected value="">Todas</option>
+				<option value="Terminada">Terminadas</option>
+				<option value="En progreso">En progreso</option>
+			</select>
+		</div>
+
+		<div style="width: 15%; margin-top: 32px; float: right;" class="col">
+			<button onclick="traerFiltros()" type="button" style="width: 100%;" class="btn btn-info">Filtrar</button>
+		</div>
+	</div>
+	
+	
+	<table id="table" class="table" style="width: 70%; margin-left: 15%; margin-top: 30px;">
 	  	<thead class="thead-dark">
 	    	<tr>
 		      <th scope="col">Bebé</th>
@@ -32,12 +68,19 @@
 
 
 <script type="text/javascript">
+
+	var baby_id = ""
+	var assistant_id = ""
+	var status = ""
+	var pagina = ""
+
 	$(document).ready(function(){
 		consultarInformacion(null, null, null, null);
 	});
 
 
-	function consultarInformacion(baby_id, assistant_id, page_id, status){
+
+	function consultarInformacion(baby_id, assistant_id, status, page_id){
 		$('#spinner').addClass('hm-spinner');
 		console.log("vamos con ajax")
 		$.ajax({
@@ -64,5 +107,16 @@
 				console.log(err)	
 			}
 	  	});
+	}
+
+	function traerFiltros(){
+		baby_id = $("#input_1").val();
+		assistant_id = $("#input_2").val();
+		status = $("#input_3").val();
+		console.log("Los valores son")
+		console.log(baby_id)
+		console.log(assistant_id)
+		console.log(status)
+		consultarInformacion(baby_id, assistant_id, status, pagina);
 	}
 </script>
