@@ -6,6 +6,12 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
 
+<select>
+	<% @bebes.each do |bebe| %>
+	<option value="<%= bebe['id'] %>"><%= bebe['name'] %></option>
+	<% end %>
+</select>
+
 <div class="main" style="width: 100%;">
 	<div id="spinner" class=""></div>
 	<table id="table" class="table" style="width: 70%; margin-left: 15%;">
@@ -19,7 +25,7 @@
 		      <th scope="col">Duración</th>
 		    </tr>
 		</thead>
-	  	<tbody>
+	  	<tbody id="elementos">
 	  	</tbody>
 	</table>
 </div>
@@ -43,9 +49,9 @@
 				if(result[0] == 200){
 					console.log("success")
 					console.log(result[1])
-					// $.each(result[0]["ruta_final"], function(index, direcciones){
-					// 	$('#elementos').append("<tr><th>"+ index + "</th><td><input style='width: 100%' id='input_"+index+"' type='text' value='" + direcciones["direccion"] + "'></td><td><button class='normal' id='"+index+"' onclick='verificarAdress(this.id)'>Verificar Direccion</button><td><button  class='normal' id='updt_"+index+"' value='"+la_order_id+"' onclick='actualizarAdress(this.id, this.value)'>Actualizar Direccion</button></td><td><button class='danger' id='"+la_order_id+"' onclick=eliminar(this.id) >Eliminar</td></tr>");
-					// });
+					$.each(result[1], function(index, value){
+						$('#elementos').append("<tr><th>"+ value['baby_name'] + "</th><th>"+ value['assistant_id'] + "</th><th>"+ value['activity_name'] + "</th><th>"+ value['start_time'] + "</th><th>"+ value['status'] + "</th><th>"+ value['duration'] + " min</th></tr>");
+					});
 					$('#spinner').removeClass('hm-spinner');
 				}else{
 					console.log("Error")
