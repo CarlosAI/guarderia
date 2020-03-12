@@ -75,13 +75,14 @@
 	var pagina = ""
 
 	$(document).ready(function(){
+		$('#spinner').addClass('hm-spinner');
 		consultarInformacion(null, null, null, null);
 	});
 
 
 
 	function consultarInformacion(baby_id, assistant_id, status, page_id){
-		$('#spinner').addClass('hm-spinner');
+		$("#elementos").empty();
 		console.log("vamos con ajax")
 		$.ajax({
 			type:"POST", 
@@ -93,13 +94,13 @@
 					console.log("success")
 					console.log(result[1])
 					$.each(result[1], function(index, value){
-						$('#elementos').append("<tr><th>"+ value['baby_name'] + "</th><th>"+ value['assistant_id'] + "</th><th>"+ value['activity_name'] + "</th><th>"+ value['start_time'] + "</th><th>"+ value['status'] + "</th><th>"+ value['duration'] + " min</th></tr>");
+						$('#elementos').append("<tr><th>"+ value['baby_name'] + "</th><th>"+ value['assistant_name'] + "</th><th>"+ value['activity_name'] + "</th><th>"+ value['start_time'] + "</th><th>"+ value['status'] + "</th><th>"+ value['duration'] + " min</th></tr>");
 					});
-					$('#spinner').removeClass('hm-spinner');
 				}else{
 					console.log("Error")
 					console.log(result[1])
 				}
+				$('#spinner').removeClass('hm-spinner');
 			}, 
 			error:function(err){
 				$('#spinner').removeClass('hm-spinner');
@@ -110,6 +111,7 @@
 	}
 
 	function traerFiltros(){
+		$('#spinner').addClass('hm-spinner');
 		baby_id = $("#input_1").val();
 		assistant_id = $("#input_2").val();
 		status = $("#input_3").val();
@@ -119,4 +121,60 @@
 		console.log(status)
 		consultarInformacion(baby_id, assistant_id, status, pagina);
 	}
+	
 </script>
+
+
+<style type="text/css">
+.hm-spinner{
+height: 160px;
+width: 160px;
+border: 8px solid transparent;
+border-top-color: #9C27B0;
+border-bottom-color: #9C27B0;
+border-radius: 50%;
+position: fixed;
+-webkit-animation: spin 3s linear infinite;
+animation: spin 3s linear infinite;
+top:45%;
+left:45%;
+z-index: 999;
+}
+
+.hm-spinner::before{
+content: "";
+position: absolute;
+top: 20px;
+right: 20px;
+bottom: 20px;
+left: 20px;
+border: 6px solid transparent;
+border-top-color: #BA68C8;
+border-bottom-color: #BA68C8;
+border-radius: 50%;
+-webkit-animation: spin 1.5s linear infinite;
+animation: spin 1.5s linear infinite;
+}
+
+@-webkit-keyframes spin {
+from {
+-webkit-transform: rotate(0deg);
+transform: rotate(0deg);
+}
+to {
+-webkit-transform: rotate(360deg);
+transform: rotate(360deg);
+}
+}
+
+@keyframes spin {
+from {
+-webkit-transform: rotate(0deg);
+transform: rotate(0deg);
+}
+to {
+-webkit-transform: rotate(360deg);
+transform: rotate(360deg);
+}
+}
+</style>

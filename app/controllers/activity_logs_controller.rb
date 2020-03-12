@@ -13,10 +13,10 @@ class ActivityLogsController < ApplicationController
 		end
 		header = {"Content-Type" => "application/json" , "Accept" => "application/json",  "User" => ENV.fetch("User"), "Auth-Token" => ENV.fetch("Auth_Token")}
 		url_base = "https://api-guarderia.herokuapp.com/api/assistants"
-		response = HTTParty.get("#{url_base}", :query => parametros, :headers =>header)
-		res = JSON.parse response.body
-		if response.code == 200
-			@asistentes = res
+		response2 = HTTParty.get("#{url_base}", :query => parametros, :headers =>header)
+		res2 = JSON.parse response2.body
+		if response2.code == 200
+			@asistentes = res2
 		end
 	end
 
